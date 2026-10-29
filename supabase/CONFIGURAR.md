@@ -1,15 +1,20 @@
 # Ativação da versão compartilhada
 
-A base de dados Supabase já foi criada e as tabelas com proteção RLS já estão instaladas. A versão web está em `web/`; ela ainda aguarda os e-mails dos três usuários e a configuração de publicação.
+A base Supabase já existe; as tabelas protegidas por RLS estão instaladas. A versão web fica em `web/`.
 
-1. No Supabase Dashboard, abra Authentication > Users e crie Felipe, Vinicius e Bruxao com o e-mail real de cada pessoa e a senha inicial combinada. Não envie senhas pessoais aqui.
-2. Copie o UUID de cada usuário. No SQL Editor, execute os três comandos comentados no fim de `schema.sql`, substituindo UUID e nome. A tabela de autorização está vazia até esse passo; ninguém consegue ler os dados antes de ser incluído.
-3. Em `web/config.js`, preencha o e-mail de cada usuário na propriedade correspondente. A URL e Publishable key já estão configuradas. A chave pública não permite acesso sem passar pelas políticas RLS; nunca adicione uma Secret key ou service_role ao HTML.
-4. No GitHub, abra Settings > Pages e publique a branch `main`, pasta `/web`. Confirme que seu plano permite GitHub Pages em repositório privado. Não mude o repositório para público. O site publicado terá um endereço acessível pela internet; a tela exige login e o banco só autoriza os três UUIDs adicionados.
-5. Depois do primeiro commit de `web/config.js`, acesse o endereço Pages e confira o acesso autorizado para cada conta e o bloqueio anônimo.
+1. No Supabase Dashboard, abra Authentication > Users e crie três usuários com os identificadores exatos abaixo e a senha inicial combinada:
+   - Felipe — `felipe@users.utilshouse.invalid`
+   - Vinicius — `vinicius@users.utilshouse.invalid`
+   - Bruxao — `bruxao@users.utilshouse.invalid`
+   Marque os e-mails como confirmados. São aliases internos reservados, não caixas postais. A senha de cada conta é digitada só no painel do Supabase; não a ponha no GitHub. Desative novos cadastros públicos.
+2. Copie o UUID de cada usuário. No SQL Editor, execute os três inserts comentados no final de `schema.sql`, com UUID e nome correspondentes. A tabela de autorização está vazia até isso ser feito; sem registro ninguém acessa os dados.
+3. No GitHub, abra Settings > Pages e selecione branch `main`, pasta `/web`. Confirme que o plano permite Pages para o repositório privado. Não torne o repositório público. A página terá um endereço da internet; o banco só autoriza os três UUIDs adicionados.
+4. Abra o endereço Pages e confirme que o login e o bloqueio anônimo funcionam.
 
-Os três usuários autorizados compartilham os mesmos dados e podem alterar registros. Recarregar exige login novamente. Use Atualizar dados para ver mudanças dos colegas. Salvamentos verificam a revisão do registro para evitar sobrescrever edições simultâneas. Ao surgir conflito, exporte o backup, atualize e reaplique as mudanças manualmente.
+A URL do projeto e a Publishable key já estão em `web/config.js`. A chave publicada é somente identificadora; nunca coloque Secret key ou service_role nesse arquivo. O acesso ao banco é limitado pela política RLS ao allow-list de UUIDs.
 
-Os dados antigos continuam no navegador local e não foram enviados à base. O financeiro pode ser restaurado pelo recurso existente; pedidos podem ser exportados em CSV, mas a importação para a nuvem precisa de uma etapa adicional. Guarde os backups.
+Os três usuários autorizados compartilham os dados e podem alterá-los. Recarregar exige login outra vez. Use Atualizar dados para ver mudanças dos colegas. O salvamento verifica a revisão para evitar sobrescrever silenciosamente edições simultâneas; em conflito, exporte backup, atualize e reaplique manualmente.
+
+Os dados antigos continuam no navegador local e não foram enviados à base. O financeiro pode ser restaurado no HTML antigo; pedidos podem ser exportados em CSV, mas ainda não há importação de pedidos para a nuvem. Guarde os backups.
 
 Documentação: https://supabase.com/docs/guides/database/postgres/row-level-security e https://supabase.com/docs/guides/getting-started/api-keys.
