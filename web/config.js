@@ -1,8 +1,6 @@
-// Somente dados públicos. Nunca colocar senhas, secret key ou service_role aqui.
+// Publishable key: safe for public browser use; authorization is enforced by Supabase RLS.
 window.UTILSHOUSE_CONFIG = {
- url: '',
- publishableKey: '',
- // Preencher com os e-mails de autenticação cadastrados para cada usuário.
+ url: 'https://udpvckhqlncydhbbolst.supabase.co',
+ publishableKey: 'sb_publishable_6c4lNPE2pYC0SCy3AuaNjQ_IC8EB2SG',
  users: {Felipe: '', Vinicius: '', Bruxao: ''}
 };
-
