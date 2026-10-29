@@ -1,14 +1,15 @@
 # Ativação da versão compartilhada
 
-1. Crie uma conta e projeto em https://supabase.com/dashboard. Mantenha a senha do banco em seu gerenciador de senhas.
-2. Execute `schema.sql` no SQL Editor do projeto novo.
-3. Desative novos cadastros públicos. Crie os três usuários via Authentication com e-mail real de cada pessoa e a senha inicial escolhida. Não invente e-mails.
-4. Registre UUID e nome dos três membros na tabela `gestao_members`, usando os exemplos comentados ao fim do SQL. Sem isso, ninguém lê os dados.
-5. Preencha `web/config.js` com URL do projeto, chave Publishable e e-mails de cada pessoa. Esses dados são públicos. Nunca use Secret key ou service_role.
-6. Teste acesso anônimo negado, usuário fora da lista negado, leitura e gravação para os membros e conflitos entre duas sessões. Teste local não comprova as regras remotas.
-7. Publique apenas a pasta `web/` pelo GitHub Pages. Repositórios privados podem exigir plano compatível; confira Settings > Pages. Não torne o repositório público sem autorização.
+A base de dados Supabase já foi criada e as tabelas com proteção RLS já estão instaladas. A versão web está em `web/`; ela ainda aguarda os e-mails dos três usuários e a configuração de publicação.
 
-Todos os três usuários autorizados compartilham os registros e podem alterá-los. A sessão fica na memória da aba e exige login novamente após recarregar. Atualize para ver mudanças dos colegas. A gravação verifica revisão e não sobrescreve silenciosamente edições concorrentes; em conflito, exporte backup, atualize e reaplique manualmente. Dados do navegador antigo não migram automaticamente: financeiro pode ser importado no HTML anterior; pedidos exportam para CSV, mas ainda não há importador. Guarde os backups.
+1. No Supabase Dashboard, abra Authentication > Users e crie Felipe, Vinicius e Bruxao com o e-mail real de cada pessoa e a senha inicial combinada. Não envie senhas pessoais aqui.
+2. Copie o UUID de cada usuário. No SQL Editor, execute os três comandos comentados no fim de `schema.sql`, substituindo UUID e nome. A tabela de autorização está vazia até esse passo; ninguém consegue ler os dados antes de ser incluído.
+3. Em `web/config.js`, preencha o e-mail de cada usuário na propriedade correspondente. A URL e Publishable key já estão configuradas. A chave pública não permite acesso sem passar pelas políticas RLS; nunca adicione uma Secret key ou service_role ao HTML.
+4. No GitHub, abra Settings > Pages e publique a branch `main`, pasta `/web`. Confirme que seu plano permite GitHub Pages em repositório privado. Não mude o repositório para público. O site publicado terá um endereço acessível pela internet; a tela exige login e o banco só autoriza os três UUIDs adicionados.
+5. Depois do primeiro commit de `web/config.js`, acesse o endereço Pages e confira o acesso autorizado para cada conta e o bloqueio anônimo.
 
-Esta preparação não criou banco, usuário remoto ou publicação. Documentação: https://supabase.com/docs/guides/database/postgres/row-level-security e https://supabase.com/docs/guides/getting-started/api-keys.
+Os três usuários autorizados compartilham os mesmos dados e podem alterar registros. Recarregar exige login novamente. Use Atualizar dados para ver mudanças dos colegas. Salvamentos verificam a revisão do registro para evitar sobrescrever edições simultâneas. Ao surgir conflito, exporte o backup, atualize e reaplique as mudanças manualmente.
 
+Os dados antigos continuam no navegador local e não foram enviados à base. O financeiro pode ser restaurado pelo recurso existente; pedidos podem ser exportados em CSV, mas a importação para a nuvem precisa de uma etapa adicional. Guarde os backups.
+
+Documentação: https://supabase.com/docs/guides/database/postgres/row-level-security e https://supabase.com/docs/guides/getting-started/api-keys.
