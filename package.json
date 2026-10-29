@@ -1,0 +1,1 @@
+{"name":"utilshouse-gestao","private":true,"type":"module","engines":{"node":">=22"},"scripts":{"start":"node --env-file-if-exists=.env server.mjs","test":"node --test test.mjs"}}
